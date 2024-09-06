@@ -1,47 +1,63 @@
-// Declare numeric versions of options as const array
+// Numeric versions of choices as const array
 const choices = ["Rock", "Scissors", "Paper"];
 
-// Declare score variables for tracking wins
+// Number of Rounds
+let numRounds = 5;
+
+// Score variables for tracking wins
 let playerScore = 0;
 let computerScore = 0;
 
-// Play game on loop until player quits
-playRound();
+numRounds = Number(prompt("How many rounds would you like to play?", numRounds));
+playGame(numRounds);
 
+function playGame(numRounds) {
+    let playerSelection;
+    let computerSelection;
+
+    for (i=0; i < numRounds; i++) {
+        playerSelection = requestPlayerChoice();
+        computerSelection = requestComputerChoice();
+        playRound(playerSelection, computerSelection);
+    }
+
+    console.log("Game Over! Final score: ");
+    console.log("  Player: " + playerScore);
+    console.log("  Computer: " + computerScore);
+    console.log("  Draws: " + (numRounds - playerScore - computerScore));
+}
 
 // Play individual round
-function playRound() {
-    let playerNum = requestPlayerChoice();
-    let computerNum = requestComputerChoice();
-
-    console.log("Player choice: " + choices[playerNum]);
-    console.log("Computer choice: " + choices[computerNum]);
+function playRound(playerChoice, computerChoice) {
+    console.log("  Player choice: " + choices[playerChoice]);
+    console.log("  Computer choice: " + choices[computerChoice]);
 
     // Compare player and computer choice to select the winner
-    if (playerNum == computerNum) {
+    if (playerChoice == computerChoice) {
         // It's a draw
+        console.log("Draw!");
     }
-    else if (playerNum < computerNum) {
-        if (playerNum == 0 && computerNum == 2) {
+    else if (playerChoice < computerChoice) {
+        if (playerChoice == 0 && computerChoice == 2) {
             // Player loses
-            console.log("You lose! " + choices[computerNum] + " beats " + choices[playerNum]);
+            console.log("You lose! " + choices[computerChoice] + " beats " + choices[playerChoice]);
             computerScore++;
         }
         else {
             // Player wins
-            console.log("You win! " + choices[playerNum] + " beats " + choices[computerNum]);
+            console.log("You win! " + choices[playerChoice] + " beats " + choices[computerChoice]);
             playerScore++;
         }
     }
     else {
-        if (playerNum == 2 && computerNum == 0) {
+        if (playerChoice == 2 && computerChoice == 0) {
             // Player wins
-            console.log("You win! " + choices[playerNum] + " beats " + choices[computerNum]);
+            console.log("You win! " + choices[playerChoice] + " beats " + choices[computerChoice]);
             playerScore++;
         }
         else {
             // Player loses
-            console.log("You lose! " + choices[computerNum] + " beats " + choices[playerNum]);
+            console.log("You lose! " + choices[computerChoice] + " beats " + choices[playerChoice]);
             computerScore++;
         }
     }
